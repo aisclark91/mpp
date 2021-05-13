@@ -31,7 +31,7 @@ CALL MPI_BARRIER
 IF(rank == 1) THEN     
    CALL MPI_SEND(a, 1, MPI_INTEGER, 2, 0, MPI_COMM_WORLD, IERR)
 ELSE IF(rank == 2) THEN
-   CALL MPI_RECV(atmp, 1, MPI_INTEGER, 0, 0, MPI_COMM_WORLD, IERR)
+   CALL MPI_RECV(atmp, 1, MPI_INTEGER, 1, 0, MPI_COMM_WORLD, IERR)
    a = atmp
 ENDIF
 !----------------------------------
