@@ -22,23 +22,21 @@ ENDIF
 
 
 !----Prints the initial state ------
-WRITE(*,*) 'a: ', a, 'rank: ', rank
+WRITE(*,*) 'before a: ', a, 'rank: ', rank
 !-----------------------------------
-
-CALL MPI_BARRIER
 
 !---First exchange attempt----------
 IF(rank == 1) THEN     
-   CALL MPI_SEND(a, 1, MPI_INTEGER, 2, 0, MPI_COMM_WORLD, IERR)
+   CALL MPI_SEND(a, 1, MPI_INT, 2, 0, MPI_COMM_WORLD, IERR)
+   a = 7
 ELSE IF(rank == 2) THEN
-   CALL MPI_RECV(atmp, 1, MPI_INTEGER, 1, 0, MPI_COMM_WORLD, IERR)
-   a = atmp
+   CALL MPI_RECV(a, 1, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE, IERR)
 ENDIF
 !----------------------------------
 
 
 !---Write After the exchange----------
-WRITE(*,*) 'a: ', a, 'rank: ', rank
+WRITE(*,*) 'after a: ', a, 'rank: ', rank
 !-------------------------------------
 
 CALL MPI_FINALIZE(IERR)
